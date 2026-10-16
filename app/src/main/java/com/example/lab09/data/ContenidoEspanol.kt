@@ -14,7 +14,8 @@ object ContenidoEspanol {
  "Fundamentos de computación en la nube" to "Comprende los fundamentos de la computación en la nube y sus beneficios para las empresas.",
  "Introducción al diseño de experiencia de usuario" to "Descubre los principios del diseño de experiencia de usuario y crea interfaces intuitivas."
  )
- fun post(value: PostModel): PostModel = posts.getOrNull(value.id - 1)?.let { value.copy(title = it.first, body = it.second) } ?: value
+ private val titulosOriginales = listOf("Introduction to Artificial Intelligence", "Web Development with React", "Data Science Fundamentals", "Machine Learning Algorithms", "Introduction to Blockchain", "iOS App Development", "Python for Data Analysis", "Cybersecurity Best Practices", "Cloud Computing Essentials", "Introduction to UX Design")
+ fun post(value: PostModel): PostModel = posts.getOrNull(titulosOriginales.indexOf(value.title))?.let { value.copy(title = it.first, body = it.second) } ?: value
  private data class TraduccionReceta(val nombre: String, val cocina: String, val ingredientes: String, val pasos: String)
  private val recetas = listOf(
  TraduccionReceta("Pizza margarita clásica", "Italiana", "Masa para pizza|Salsa de tomate|Queso mozzarella fresco|Hojas de albahaca fresca|Aceite de oliva|Sal y pimienta al gusto", "Precalienta el horno a 245 °C.|Extiende la masa y distribuye la salsa de tomate de manera uniforme.|Añade rodajas de mozzarella y hojas de albahaca fresca.|Rocía con aceite de oliva y sazona con sal y pimienta.|Hornea durante 12 a 15 minutos o hasta que los bordes estén dorados.|Corta en porciones y sirve caliente."),
@@ -34,3 +35,4 @@ object ContenidoEspanol {
  )
  fun amphibian(value: Amphibian): Amphibian = anfibios[value.name]?.let { value.copy(name = it.first, type = it.second, description = it.third) } ?: value
 }
+
