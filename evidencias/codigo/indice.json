@@ -1,0 +1,68 @@
+[
+  {
+    "archivo": "01-permiso-internet.png",
+    "fuente": "app/src/main/AndroidManifest.xml",
+    "inicio": 2,
+    "fin": 16
+  },
+  {
+    "archivo": "02-dependencias.png",
+    "fuente": "app/build.gradle.kts",
+    "inicio": 53,
+    "fin": 66
+  },
+  {
+    "archivo": "03-modelo-post.png",
+    "fuente": "app/src/main/java/com/example/lab09/data/ApiRepository.kt",
+    "inicio": 9,
+    "fin": 11
+  },
+  {
+    "archivo": "04-servicio-post.png",
+    "fuente": "app/src/main/java/com/example/lab09/data/ApiRepository.kt",
+    "inicio": 18,
+    "fin": 21
+  },
+  {
+    "archivo": "05-retrofit.png",
+    "fuente": "app/src/main/java/com/example/lab09/data/ApiRepository.kt",
+    "inicio": 27,
+    "fin": 37
+  },
+  {
+    "archivo": "06-navegacion.png",
+    "fuente": "app/src/main/java/com/example/lab09/MainActivity.kt",
+    "inicio": 22,
+    "fin": 34
+  },
+  {
+    "archivo": "07-rutas.png",
+    "fuente": "app/src/main/java/com/example/lab09/MainActivity.kt",
+    "inicio": 34,
+    "fin": 44
+  },
+  {
+    "archivo": "08-publicaciones.png",
+    "fuente": "app/src/main/java/com/example/lab09/ui/moduloPosts.kt",
+    "inicio": 51,
+    "fin": 69
+  },
+  {
+    "archivo": "09-mvvm.png",
+    "fuente": "app/src/main/java/com/example/lab09/ui/LabViewModel.kt",
+    "inicio": 9,
+    "fin": 30
+  },
+  {
+    "archivo": "10-recetas.png",
+    "fuente": "app/src/main/java/com/example/lab09/ui/moduloPosts.kt",
+    "inicio": 82,
+    "fin": 106
+  },
+  {
+    "archivo": "11-anfibios.png",
+    "fuente": "app/src/main/java/com/example/lab09/ui/moduloPosts.kt",
+    "inicio": 122,
+    "fin": 142
+  }
+]
