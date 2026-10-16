@@ -9,7 +9,7 @@ Aplicación Android con Kotlin, Jetpack Compose, Retrofit, Gson y arquitectura M
 
 - Publicaciones de JSONPlaceholder Mock con consulta individual por identificador.
 - Ejercicio 1: cinco recetas de DummyJSON con búsqueda, imagen, ingredientes y preparación.
-- Reto adicional: catálogo de seis anfibios con imágenes y descripciones.
+- Reto adicional: catálogo de seis anfibios con búsqueda, filtros por tipo, contador de resultados, ficha de cada especie y actualización desde la API.
 - Interfaz y contenido de demostración en español.
 - Estados de carga, error, reintento y listas vacías.
 
@@ -50,4 +50,10 @@ Las capturas corresponden a la ejecución real en el emulador Medium Phone con A
 
 
 Las capturas reales de código tomadas dentro de Android Studio están en [evidencias/android-studio](evidencias/android-studio). La guía de Word completada conserva intacta la carátula del profesor: [abrir Word](entrega/GLAB-S09-BPAREJA-2026-01-completado.docx).
+
+## Funcionamiento de puntos adicionales
+
+En Anfibios, seleccionar un tipo y escribir en Buscar especie combina ambos criterios. Al seleccionar Rana aparecen dos resultados; al buscar azules queda uno. Pulsar una tarjeta abre su ficha y Volver al catálogo conserva la selección. Actualizar vuelve a consultar el servicio. Borrar elimina la búsqueda y Limpiar filtros restaura el catálogo si no hay coincidencias.
+
+Se verificaron los siete recorridos en el emulador y se registraron en [verificacion.json](evidencias/anfibios/verificacion.json). El [video específico del reto](evidencias/anfibios/reto-anfibios.mp4) y sus [capturas reales](evidencias/anfibios) documentan el funcionamiento. El script `evidencias/verificar_anfibios.py` permite repetir la comprobación con el emulador activo y el APK compilado.
 

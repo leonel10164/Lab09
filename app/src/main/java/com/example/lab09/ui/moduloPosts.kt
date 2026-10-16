@@ -30,9 +30,9 @@ fun Heading(kicker: String, title: String, subtitle: String) {
 @Composable
 fun HomeScreen(open: (String) -> Unit) {
     LazyColumn(
-     Modifier
-      .fillMaxSize()
-      .padding(horizontal = 20.dp),
+        Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
@@ -99,9 +99,9 @@ fun <T> LoadContent(state: UiState<T>, retry: () -> Unit, content: @Composable (
         }
 
         state.error != null -> Box(
-         Modifier
-          .fillMaxSize()
-          .padding(24.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(24.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -120,9 +120,9 @@ fun <T> LoadContent(state: UiState<T>, retry: () -> Unit, content: @Composable (
 fun PostsScreen(state: UiState<List<PostModel>>, retry: () -> Unit, open: (Int) -> Unit) {
     LoadContent(state, retry) { posts ->
         LazyColumn(
-         Modifier
-          .fillMaxSize()
-          .padding(horizontal = 20.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             item {
@@ -222,8 +222,8 @@ fun RecipesScreen(state: UiState<List<Recipe>>, retry: () -> Unit, open: (Int) -
                         model = recipe.image,
                         contentDescription = recipe.name,
                         modifier = Modifier
-                         .fillMaxWidth()
-                         .height(180.dp),
+                            .fillMaxWidth()
+                            .height(180.dp),
                         contentScale = ContentScale.Crop
                     )
                     Column(
@@ -263,8 +263,8 @@ fun RecipeScreen(state: UiState<Recipe>, retry: () -> Unit, back: () -> Unit) {
                     model = recipe.image,
                     contentDescription = recipe.name,
                     modifier = Modifier
-                     .fillMaxWidth()
-                     .height(220.dp),
+                        .fillMaxWidth()
+                        .height(220.dp),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -292,49 +292,155 @@ fun RecipeScreen(state: UiState<Recipe>, retry: () -> Unit, back: () -> Unit) {
 
 @Composable
 fun AmphibiansScreen(state: UiState<List<Amphibian>>, retry: () -> Unit) {
+    var query by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
+    var type by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("Todos") }
+    var selectedName by androidx.compose.runtime.saveable.rememberSaveable {
+        mutableStateOf<String?>(
+            null
+        )
+    }
     LoadContent(state, retry) { amphibians ->
-        LazyColumn(
-            Modifier.padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            item {
-                Heading(
-                    "Reto adicional · Android",
-                    "Vida anfibia",
-                    "${amphibians.size} especies para conocer y proteger"
-                )
+        val selected = amphibians.firstOrNull { it.name == selectedName }
+        if (selected != null) {
+            AmphibianDetails(selected) { selectedName = null }
+        } else {
+            val filtered = amphibians.filter {
+                (type == "Todos" || it.type == type) &&
+                        it.name.contains(query.trim(), ignoreCase = true)
             }
-            if (amphibians.isEmpty()) item { Text("No hay especies disponibles.") }
-            items(amphibians) { animal ->
-                Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp)) {
-                    AsyncImage(
-                        model = animal.image,
-                        contentDescription = animal.name,
-                        modifier = Modifier
-                         .fillMaxWidth()
-                         .height(200.dp),
-                        contentScale = ContentScale.Crop
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                item {
+                    Heading(
+                        "Reto adicional · API REST", "Vida anfibia",
+                        "Busca, filtra y descubre las especies del catálogo"
                     )
-                    Column(
-                        Modifier.padding(20.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                }
+                item {
+                    Row(
+                        Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            animal.type.uppercase(),
-                            color = MaterialTheme.colorScheme.primary,
+                            "${amphibians.size} especies cargadas",
                             style = MaterialTheme.typography.labelLarge
                         )
-                        Text(
-                            animal.name,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(animal.description)
+                        OutlinedButton(onClick = retry) { Text("Actualizar") }
                     }
                 }
+                item {
+                    OutlinedTextField(value = query, onValueChange = { query = it },
+                        label = { Text("Buscar especie") }, singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                        trailingIcon = {
+                            if (query.isNotEmpty()) TextButton(onClick = { query = "" }) {
+                                Text("Borrar")
+                            }
+                        })
+                }
+                item {
+                    androidx.compose.foundation.lazy.LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(
+                            listOf("Todos") + amphibians.map { it.type }.distinct().sorted()
+                        ) { option ->
+                            FilterChip(selected = type == option, onClick = { type = option },
+                                label = { Text(option) })
+                        }
+                    }
+                }
+                item {
+                    Text(
+                        "${filtered.size} de ${amphibians.size} especies",
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+                if (filtered.isEmpty()) item {
+                    Card(Modifier.fillMaxWidth()) {
+                        Column(Modifier.padding(20.dp)) {
+                            Text("No se encontraron especies con esos criterios.")
+                            TextButton(onClick = { query = ""; type = "Todos" }) {
+                                Text("Limpiar filtros")
+                            }
+                        }
+                    }
+                }
+                items(filtered, key = { it.name }) { animal ->
+                    Card(
+                        onClick = { selectedName = animal.name },
+                        modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(24.dp)
+                    ) {
+                        AsyncImage(
+                            model = animal.image, contentDescription = animal.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(180.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Column(
+                            Modifier.padding(20.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Text(
+                                animal.type.uppercase(), color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                            Text(
+                                animal.name, style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(animal.description, maxLines = 2)
+                            Text(
+                                "Ver ficha de la especie →",
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
+                item { Spacer(Modifier.height(20.dp)) }
             }
-            item { Spacer(Modifier.height(16.dp)) }
         }
     }
 }
 
+@Composable
+private fun AmphibianDetails(animal: Amphibian, back: () -> Unit) {
+    androidx.activity.compose.BackHandler(onBack = back)
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item { TextButton(onClick = back) { Text("← Volver al catálogo") } }
+        item {
+            AsyncImage(
+                model = animal.image, contentDescription = animal.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp), contentScale = ContentScale.Crop
+            )
+        }
+        item { Heading(animal.type, animal.name, "Ficha de la especie") }
+        item {
+            Card(Modifier.fillMaxWidth()) {
+                Column(Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text("Características y hábitat", style = MaterialTheme.typography.titleLarge)
+                    Text(animal.description, style = MaterialTheme.typography.bodyLarge)
+                }
+            }
+        }
+        item {
+            Text(
+                "Información del catálogo de anfibios de Android Developers.",
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
+        item { Spacer(Modifier.height(24.dp)) }
+    }
+}
