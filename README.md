@@ -48,3 +48,6 @@ Las capturas corresponden a la ejecución real en el emulador Medium Phone con A
 - [Informe con respuestas y capturas](entrega/Informe-Laboratorio-09-Leonel-Arenas.pdf)
 - [Video del funcionamiento](evidencias/laboratorio-es.mp4)
 
+
+Las capturas reales de código tomadas dentro de Android Studio están en [evidencias/android-studio](evidencias/android-studio). La guía de Word completada conserva intacta la carátula del profesor: [abrir Word](entrega/GLAB-S09-BPAREJA-2026-01-completado.docx).
+
