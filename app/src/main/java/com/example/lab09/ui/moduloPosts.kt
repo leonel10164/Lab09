@@ -51,12 +51,12 @@ fun <T> LoadContent(state: UiState<T>, retry: () -> Unit, content: @Composable (
 fun PostsScreen(state: UiState<List<PostModel>>, retry: () -> Unit, open: (Int) -> Unit) {
  LoadContent(state, retry) { posts ->
  LazyColumn(Modifier.fillMaxSize().padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
- item { Heading("Parte guiada · JSONPlaceholder", "Publicaciones", "${posts.size} posts disponibles · selecciona uno") }
+ item { Heading("Parte guiada · JSONPlaceholder", "Publicaciones", "${posts.size} publicaciones disponibles · selecciona uno") }
  if (posts.isEmpty()) item { Text("No hay publicaciones disponibles.") }
  items(posts, key = { it.id }) { post ->
  Card(onClick = { open(post.id) }, modifier = Modifier.fillMaxWidth()) {
  Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
- Text("POST ${post.id.toString().padStart(2, '0')} · AUTOR ${post.userId}", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelMedium)
+ Text("PUBLICACIÓN ${post.id.toString().padStart(2, '0')} · AUTOR ${post.userId}", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelMedium)
  Text(post.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
  Text("Leer publicación →", style = MaterialTheme.typography.labelLarge)
  }
@@ -84,7 +84,7 @@ fun RecipesScreen(state: UiState<List<Recipe>>, retry: () -> Unit, open: (Int) -
  LoadContent(state, retry) { recipes ->
  val filtered = recipes.filter { it.name.contains(search, true) || it.cuisine.contains(search, true) }
  LazyColumn(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
- item { Heading("Ejercicio 1 · DummyJSON", "Cocina del mundo", "Recetas para descubrir nuevos sabores") }
+ item { Heading("Ejercicio 1 · DummyJSON", "Cocina del mundo", "Cinco recetas traducidas para descubrir nuevos sabores") }
  item { OutlinedTextField(value = search, onValueChange = { search = it }, label = { Text("Buscar receta o cocina") }, modifier = Modifier.fillMaxWidth(), singleLine = true) }
  item { Text("${filtered.size} recetas", style = MaterialTheme.typography.labelLarge) }
  if (filtered.isEmpty()) item { Text("No se encontraron recetas.") }
@@ -138,3 +138,4 @@ fun AmphibiansScreen(state: UiState<List<Amphibian>>, retry: () -> Unit) {
  }
  }
 }
+

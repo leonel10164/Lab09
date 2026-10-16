@@ -25,8 +25,8 @@ fun ProgPrincipal9(vm: LabViewModel = viewModel()) {
  val nav = rememberNavController()
  val current by nav.currentBackStackEntryAsState()
  val route = current?.destination?.route ?: "inicio"
- val tabs = listOf("inicio" to "Inicio", "posts" to "Posts", "recetas" to "Recetas", "anfibios" to "Anfibios")
- Scaffold(topBar = { CenterAlignedTopAppBar(title = { Text("Lab 09 · API Explorer") }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary, titleContentColor = Color.White)) },
+ val tabs = listOf("inicio" to "Inicio", "posts" to "Publicaciones", "recetas" to "Recetas", "anfibios" to "Anfibios")
+ Scaffold(topBar = { CenterAlignedTopAppBar(title = { Text("Lab 09 · Explora las API") }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary, titleContentColor = Color.White)) },
  bottomBar = { NavigationBar { tabs.forEachIndexed { index, (path, label) ->
  NavigationBarItem(selected = route.startsWith(path), onClick = { nav.navigate(path) { popUpTo(nav.graph.startDestinationId) { saveState = true }; launchSingleTop = true; restoreState = true } }, icon = { Text(listOf("⌂", "≡", "♧", "≈")[index]) }, label = { Text(label) })
  } } }) { padding ->
@@ -42,3 +42,4 @@ fun ProgPrincipal9(vm: LabViewModel = viewModel()) {
  }
  }
 }
+
