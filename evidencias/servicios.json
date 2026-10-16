@@ -1,0 +1,17 @@
+[
+  {
+    "recurso": "users",
+    "resultado": "Disponible",
+    "registros": 20
+  },
+  {
+    "recurso": "comments",
+    "resultado": "Disponible",
+    "registros": 20
+  },
+  {
+    "recurso": "todos",
+    "resultado": "Disponible",
+    "registros": 20
+  }
+]

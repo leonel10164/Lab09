@@ -13,3 +13,9 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+/tmp/
+/entrega/Lab09.apk
+/evidencias/window.xml
+/evidencias/*-api.json
+
